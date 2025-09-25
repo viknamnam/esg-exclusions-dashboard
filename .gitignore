@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.venv/
+venv/
+.env
+
+# Streamlit
+.streamlit/secrets.toml
+
+# PyCharm
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data / caches
+*.pkl
+*.pickle
+
+# keep most .pkl/.xlsx ignored, but track these two
+!2024-095 FET - 2024 standardized dataset 241210.xlsx
+!2024-095 FET - 2024 standardized dataset 241210_processed.pkl
+
