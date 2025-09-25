@@ -192,6 +192,12 @@ def load_css_styling():
             background-color: var(--dnv-sandstone-95); 
             font-family: var(--dnv-font-primary);
         }
+        
+        /* SIMPLE SEARCH BOX COLOR FIX */
+        .stTextInput > div > div > input {
+            background: white !important;
+            border: 2px solid var(--dnv-blue-sea) !important;
+        }
 
         
         .element-container:first-child {

@@ -207,7 +207,7 @@ class FETCoreEngine:
 
             # Show cache info to user
             cache_size_mb = sum(f.stat().st_size for f in self.cache_files.values() if f.exists()) / 1024 / 1024
-            st.success(f"💾 Preprocessing results cached ({cache_size_mb:.1f}MB) - next startup will be much faster!")
+           # st.success(f"💾 Preprocessing results cached ({cache_size_mb:.1f}MB) - next startup will be much faster!")
 
         except Exception as e:
             logger.error(f"Failed to save cache: {e}")
@@ -272,7 +272,7 @@ class FETCoreEngine:
             wb_stats = self.wb_sanctions.get_stats()
 
             # Step 2: Full preprocessing (the expensive part that we want to cache!)
-            st.info("🔥 Running full preprocessing - company normalization, translations, risk calculations...")
+            # st.info("🔥 Running full preprocessing - company normalization, translations, risk calculations...")
 
             # Initialize columns reference
             COLUMNS = FETDataUtils.COLUMNS
@@ -396,7 +396,7 @@ class FETCoreEngine:
             # Also clear any old cache files
             self._clear_old_cache_files()
 
-            st.success(f"🗑️ Cleared {files_removed} cache files. Next run will rebuild from scratch.")
+           # st.success(f"🗑️ Cleared {files_removed} cache files. Next run will rebuild from scratch.")
             logger.info(f"Manually cleared {files_removed} cache files")
 
         except Exception as e:
@@ -449,14 +449,14 @@ class FETCoreEngine:
         for file_path in possible_files:
             if file_path.exists():
                 database_file = file_path
-                st.info(f"🔍 Found FET database file: {database_file}")
+                # st.info(f"🔍 Found FET database file: {database_file}")
                 break
 
         # Find sanctioned individuals file
         for file_path in sanctioned_files:
             if file_path.exists():
                 sanctioned_file = file_path
-                st.info(f"📋 Found World Bank sanctioned individuals file: {sanctioned_file}")
+                # st.info(f"📋 Found World Bank sanctioned individuals file: {sanctioned_file}")
                 break
 
         if database_file is None:
@@ -479,14 +479,14 @@ class FETCoreEngine:
                 unique_companies = self.df_master[FETDataUtils.COLUMNS['company_group']].nunique()
                 unique_investors = self.df_master[FETDataUtils.COLUMNS['excluded_by']].nunique()
 
-                st.success(
-                    f"⚡ Loaded from cache: {len(self.df_master):,} total records, {unique_companies:,} companies, {unique_investors:,} investors/authorities")
-                st.info("🎯 Combined database ready - FET exclusions + World Bank sanctions!")
+              # st.success(
+               #     f"⚡ Loaded from cache: {len(self.df_master):,} total records, {unique_companies:,} companies, {unique_investors:,} investors/authorities")
+                # st.info("🎯 Combined database ready - FET exclusions + World Bank sanctions!")
                 return True
 
         # Cache not valid - need to do full preprocessing
-        st.info(
-            "🔄 Cache invalid or missing - performing full preprocessing on combined datasets (this may take a minute)...")
+        # st.info(
+           # "🔄 Cache invalid or missing - performing full preprocessing on combined datasets (this may take a minute)...")
 
         # Use enhanced loading method that handles multiple datasets
         result = self._load_and_preprocess_multiple_datasets(
@@ -513,7 +513,7 @@ class FETCoreEngine:
         # Clean up old cache files
         self._clear_old_cache_files()
 
-        st.success(result['source_info'])
+      #  st.success(result['source_info'])
 
         # Validate required columns
         missing_cols = [col for col in FETDataUtils.COLUMNS.values() if col not in self.df_master.columns]
@@ -524,15 +524,15 @@ class FETCoreEngine:
         unique_companies = self.df_master[FETDataUtils.COLUMNS['company_group']].nunique()
         unique_investors = self.df_master[FETDataUtils.COLUMNS['excluded_by']].nunique()
 
-        st.info(
-            f"📈 Combined database contains {unique_companies:,} unique companies from {unique_investors:,} investors/authorities")
+        #st.info(
+         #   f"📈 Combined database contains {unique_companies:,} unique companies from {unique_investors:,} investors/authorities")
 
-        if result['translation_stats']['foreign_translations'] > 0:
-            st.info(
-                f"🌐 Translation Summary: {result['translation_stats']['foreign_translations']} foreign terms translated, "
-                f"{result['translation_stats']['api_calls_made']} API calls used")
+        # if result['translation_stats']['foreign_translations'] > 0:
+          #  st.info(
+             #   f"🌐 Translation Summary: {result['translation_stats']['foreign_translations']} foreign terms translated, "
+              #  f"{result['translation_stats']['api_calls_made']} API calls used")
 
-        st.success("🚀 Ready to analyze companies from both FET exclusions AND World Bank sanctions!")
+       # st.success("🚀 Ready to analyze companies from both FET exclusions AND World Bank sanctions!")
         return True
 
     def _fuzzy_match_company(self, query_name: str, threshold: int = 85) -> Optional[Tuple[str, int]]:
@@ -910,7 +910,7 @@ class FETCoreEngine:
                 try:
                     # Load sanctioned individuals file
                     df_sanctioned_raw = pd.read_excel(sanctioned_file_path, engine='openpyxl')
-                    st.info(f"📋 Loaded {len(df_sanctioned_raw):,} rows from World Bank sanctions file")
+                   # st.info(f"📋 Loaded {len(df_sanctioned_raw):,} rows from World Bank sanctions file")
 
                     # Transform sanctioned data to match FET structure
                     df_sanctioned_mapped = self._map_sanctioned_to_fet_structure(df_sanctioned_raw)
@@ -922,15 +922,15 @@ class FETCoreEngine:
                         source_info += f"\n📋 Added {len(df_sanctioned_mapped):,} World Bank sanctioned entities"
                         source_info += f"\n🔗 Total merged records: {len(df_merged):,}"
 
-                        st.success(
-                            f"🔗 Successfully merged datasets: {len(df_fet):,} FET + {len(df_sanctioned_mapped):,} sanctioned = {len(df_merged):,} total")
+                        #st.success(
+                         #   f"🔗 Successfully merged datasets: {len(df_fet):,} FET + {len(df_sanctioned_mapped):,} sanctioned = {len(df_merged):,} total")
 
                 except Exception as e:
                     st.warning(f"⚠️ Failed to load World Bank sanctions file: {e}")
-                    st.info("📊 Continuing with FET data only...")
+                   # st.info("📊 Continuing with FET data only...")
 
             # Step 3: Apply full preprocessing to merged dataset
-            st.info("🔄 Running full preprocessing - company normalization, translations, risk calculations...")
+           # st.info("🔄 Running full preprocessing - company normalization, translations, risk calculations...")
 
             # Initialize columns reference
             COLUMNS = FETDataUtils.COLUMNS
@@ -1040,7 +1040,7 @@ class FETCoreEngine:
         """Map sanctioned individuals data to FET dataset structure."""
         try:
             # First, let's see what columns we have in the sanctioned file
-            st.info(f"📊 Sanctioned file columns: {list(df_sanctioned.columns)}")
+           # st.info(f"📊 Sanctioned file columns: {list(df_sanctioned.columns)}")
 
             # Expected columns: Firm Name, Additional Firm Info, Address, Country, Ineligibility Period, From Date, To Date, Grounds
             expected_columns = ['Firm Name', 'Additional Firm Info', 'Address', 'Country', 'Ineligibility Period',
@@ -1061,14 +1061,14 @@ class FETCoreEngine:
                 # Set the header row and clean the data
                 df_clean.columns = df_clean.iloc[header_row]
                 df_clean = df_clean.iloc[header_row + 1:].reset_index(drop=True)
-                st.info(f"📋 Found header row at index {header_row}")
+               # st.info(f"📋 Found header row at index {header_row}")
 
             # Remove empty rows
             df_clean = df_clean.dropna(subset=['Firm Name']).reset_index(drop=True)
             df_clean = df_clean[df_clean['Firm Name'].astype(str).str.strip() != ''].reset_index(drop=True)
 
             num_entities = len(df_clean)
-            st.info(f"📋 Found {num_entities} sanctioned entities after cleaning")
+           # st.info(f"📋 Found {num_entities} sanctioned entities after cleaning")
 
             if num_entities == 0:
                 st.warning("⚠️ No valid sanctioned entities found in the file")
@@ -1163,11 +1163,11 @@ class FETCoreEngine:
             # Reorder columns to match FET structure exactly
             df_mapped = df_mapped.reindex(columns=list(fet_columns.values()), fill_value='N/A')
 
-            st.success(f"✅ Successfully mapped {len(df_mapped)} World Bank sanctioned entities to FET structure")
+          #  st.success(f"✅ Successfully mapped {len(df_mapped)} World Bank sanctioned entities to FET structure")
 
             # Show a sample of the mapped data with more details
             if len(df_mapped) > 0:
-                st.info("📋 Sample of mapped sanctioned entities:")
+              #  st.info("📋 Sample of mapped sanctioned entities:")
                 sample_size = min(5, len(df_mapped))
                 for i in range(sample_size):
                     entity_name = df_mapped.iloc[i][fet_columns['company_group']]
@@ -1276,7 +1276,7 @@ class FETCoreEngine:
 
         # Check if exact match exists in FET
         if normalized in self.company_lookup:
-            st.success("✅ Exact normalized match found in FET!")
+           # st.success("✅ Exact normalized match found in FET!")
             indices = self.company_lookup[normalized]
             original_names = [self.df_master.iloc[i][FETDataUtils.COLUMNS['company_group']] for i in indices[:3]]
             st.write(f"**Matched companies:** {original_names}")
