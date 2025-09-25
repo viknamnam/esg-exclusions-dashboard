@@ -1166,17 +1166,17 @@ class FETCoreEngine:
           #  st.success(f"✅ Successfully mapped {len(df_mapped)} World Bank sanctioned entities to FET structure")
 
             # Show a sample of the mapped data with more details
-            if len(df_mapped) > 0:
+          #  if len(df_mapped) > 0:
               #  st.info("📋 Sample of mapped sanctioned entities:")
-                sample_size = min(5, len(df_mapped))
-                for i in range(sample_size):
-                    entity_name = df_mapped.iloc[i][fet_columns['company_group']]
-                    country = df_mapped.iloc[i][fet_columns['company_country']]
-                    grounds = df_mapped.iloc[i][fet_columns['motivation']]
-                    st.write(f"  {i + 1}. **{entity_name}** ({country}) - {grounds}")
+           #     sample_size = min(5, len(df_mapped))
+            #    for i in range(sample_size):
+             #       entity_name = df_mapped.iloc[i][fet_columns['company_group']]
+              #      country = df_mapped.iloc[i][fet_columns['company_country']]
+               #     grounds = df_mapped.iloc[i][fet_columns['motivation']]
+                #    st.write(f"  {i + 1}. **{entity_name}** ({country}) - {grounds}")
 
-                if len(df_mapped) > 5:
-                    st.write(f"  ... and {len(df_mapped) - 5} more entities")
+               # if len(df_mapped) > 5:
+                #    st.write(f"  ... and {len(df_mapped) - 5} more entities")
 
             return df_mapped
 
