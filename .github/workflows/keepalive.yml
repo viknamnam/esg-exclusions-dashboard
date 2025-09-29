@@ -1,0 +1,20 @@
+name: Keep Streamlit Awake
+on:
+  schedule:
+    - cron: "0 */8 * * *"  # Every 8 hours
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Streamlit App (Full Load)
+        run: |
+          # Multiple pings to ensure full app wake
+          for i in {1..3}; do
+            echo "Ping attempt $i..."
+            curl -sSf https://esg-exclusions-dashboard.streamlit.app/ > /dev/null
+            sleep 5
+          done
+          echo "✅ App pinged successfully at $(date)"
+        continue-on-error: true
