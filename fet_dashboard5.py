@@ -34,7 +34,7 @@ except ImportError:
 
 # Configure page
 st.set_page_config(
-    page_title="Investor Exclusions Dashboard",
+    page_title="Global Investor ESG Exclusions Dashboard",
     page_icon="🛡️",
     layout="wide",
     initial_sidebar_state="collapsed"
@@ -710,7 +710,7 @@ def generate_pdf_report(result):
     # Footer
     story.append(Spacer(1, 30))
     story.append(Paragraph(
-        f"<i>Report generated on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} using FET Risk Intelligence Dashboard</i>",
+        f"<i>Report generated on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} using Global ESG Risk Intelligence Dashboard</i>",
         styles['Normal']))
 
     # Build PDF
@@ -1188,7 +1188,7 @@ def main():
     if not st.session_state.database_loaded and not st.session_state.loading_attempted:
         st.session_state.loading_attempted = True
 
-        with st.spinner("🔥 Initializing FET database..."):
+        with st.spinner("🔥 Initializing Global Investor ESG Exclusions database..."):
             checker = load_fet_checker()
 
         if checker:
@@ -1199,12 +1199,12 @@ def main():
 
     # Handle file upload separately and only if no database loaded (like the original)
     if not st.session_state.database_loaded:
-        st.error("📂 FET Database not found. Please upload the Excel file.")
+        st.error("📂 Database not found. Please upload the Excel file.")
 
         uploaded_file = st.file_uploader(
-            "Upload FET Excel Dataset (.xlsx)",
+            "Upload Excel Dataset (.xlsx)",
             type=["xlsx"],
-            help="Upload the FET exclusion database Excel file",
+            help="Upload the ESG exclusion database Excel file",
             key="main_file_uploader"
         )
 
@@ -1226,7 +1226,7 @@ def main():
                 return
 
         elif not uploaded_file:
-            st.info("👆 Please upload the FET database Excel file to continue")
+            st.info("👆 Please upload the database Excel file to continue")
             return
 
     # Safety check with better error handling (like the original)

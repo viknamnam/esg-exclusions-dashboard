@@ -220,7 +220,7 @@ def generate_pdf_report(result):
     # Footer
     story.append(Spacer(1, 30))
     story.append(Paragraph(
-        f"<i>Report generated on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} using FET Risk Intelligence Dashboard</i>",
+        f"<i>Report generated on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} using Global Investor ESG Risk Intelligence Dashboard</i>",
         styles['Normal']))
 
     # Build PDF

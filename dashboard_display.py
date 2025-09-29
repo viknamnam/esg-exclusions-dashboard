@@ -49,7 +49,7 @@ def render_company_header(result, business_metrics):
         # NEW: Database indicators
         db_indicators = []
         if fet_found:
-            db_indicators.append("📊 FET Database")
+            db_indicators.append("📊 Global Exclusions Database")
         if wb_found:
             db_indicators.append("🏛️ World Bank")
 
@@ -163,21 +163,21 @@ def render_kpi_metrics(result, factors, exclusion_details, wb_details):
         st.metric(
             "Financial Institutions",
             unique_investors,
-            help="Number of investors excluding this company (FET Database)"
+            help="Number of investors excluding this company (Global ESG Exclusions Database)"
         )
 
     with col2:
         st.metric(
             "Countries Represented",
             unique_countries,
-            help="Geographic spread of investor concerns (FET Database)"
+            help="Geographic spread of investor concerns (Global ESG Exclusions Database)"
         )
 
     with col3:
         st.metric(
-            "Recent FET Exclusions",
+            "Recent Global ESG Exclusions",
             recent_activity,
-            help="FET exclusions in last 2 years"
+            help="ESG exclusions in last 2 years"
         )
 
     with col4:
@@ -190,9 +190,9 @@ def render_kpi_metrics(result, factors, exclusion_details, wb_details):
             )
         else:
             st.metric(
-                "Latest FET Exclusion",
+                "Latest ESG Exclusion",
                 last_date,
-                help="Most recent FET exclusion date"
+                help="Most recent ESG exclusion date"
             )
 
 
@@ -390,7 +390,7 @@ def render_exclusion_details_table(result):
     # Show FET exclusions if available
     if result['match'].get('fet_found', False) and exclusion_details:
         st.markdown("---")
-        st.subheader("📋 FET Database Exclusions")
+        st.subheader("📋 Global ESG Database Exclusions")
 
         df_display = pd.DataFrame(exclusion_details)
 
@@ -502,7 +502,7 @@ def render_exclusion_details_table(result):
                 st.error("❌ No display columns available - please check data structure")
 
         else:
-            st.info("ℹ️ No FET records match the selected filters")
+            st.info("ℹ️ No records match the selected filters")
 
     # NEW: Show World Bank sanctions if available
     if result['match'].get('wb_found', False) and wb_details:
